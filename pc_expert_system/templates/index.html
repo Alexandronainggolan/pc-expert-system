@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildWise | Expert PC Analyzer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-section {
+            background: #1a237e;
+            color: white;
+            padding: 50px 0;
+            border-bottom: 5px solid #ffd600;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn-analyze {
+            background: #1a237e;
+            color: white;
+            font-weight: bold;
+            padding: 12px;
+        }
+
+        .btn-analyze:hover {
+            background: #0d47a1;
+            color: white;
+        }
+
+        .result-card {
+            border-left: 8px solid #1a237e;
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">BuildWise</h1>
+            <p class="lead">Solusi Cerdas Analisis Komponen & Optimalisasi Budget PC</p>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="card shadow p-4">
+                    <h4 class="mb-4 text-secondary">Konfigurasi Perangkat Keras</h4>
+                    <form method="POST" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Processor (CPU)</label>
+                                <select name="cpu" class="form-select" required>
+                                    <option value="" disabled {{ 'selected' if not selected_ids }}>Tentukan Processor
+                                        </option>
+                                    {% for item in cpu_list %}
+                                    <option value="{{ item.id }}" {{ 'selected' if selected_ids and
+                                        selected_ids.cpu_id==item.id }}>
+                                        {{ item.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Motherboard</label>
+                                <select name="motherboard" class="form-select" required>
+                                    <option value="" disabled {{ 'selected' if not selected_ids }}>Konfigurasi
+                                        Motherboard</option>
+                                    {% for item in motherboard_list %}
+                                    <option value="{{ item.id }}" {{ 'selected' if selected_ids and
+                                        selected_ids.motherboard_id==item.id }}>
+                                        {{ item.name }} ({{ item.socket }} - {{ item.ram_type }})
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Graphics Card (GPU)</label>
+                                <select name="gpu" class="form-select" required>
+                                    <option value="" disabled {{ 'selected' if not selected_ids }}>Spesifikasikan GPU
+                                        </option>
+                                    {% for item in gpu_list %}
+                                    <option value="{{ item.id }}" {{ 'selected' if selected_ids and
+                                        selected_ids.gpu_id==item.id }}>
+                                        {{ item.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">RAM Memory</label>
+                                <select name="ram" class="form-select" required>
+                                    <option value="" disabled {{ 'selected' if not selected_ids }}>Alokasikan Memori
+                                        RAM</option>
+                                    {% for item in ram_list %}
+                                    <option value="{{ item.id }}" {{ 'selected' if selected_ids and
+                                        selected_ids.ram_id==item.id }}>
+                                        {{ item.name }} ({{ item.form_factor }})
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Storage (SSD/HDD)</label>
+                                <select name="storage" class="form-select" required>
+                                    <option value="" disabled {{ 'selected' if not selected_ids }}>Pilih Unit
+                                        Penyimpanan</option>
+                                    {% for item in storage_list %}
+                                    <option value="{{ item.id }}" {{ 'selected' if selected_ids and
+                                        selected_ids.storage_id==item.id }}>
+                                        {{ item.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Power Supply (PSU)</label>
+                                <select name="psu" class="form-select" required>
+                                    <option value="" disabled {{ 'selected' if not selected_ids }}>Tentukan Kapasitas
+                                        Daya (PSU)</option>
+                                    {% for item in psu_list %}
+                                    <option value="{{ item.id }}" {{ 'selected' if selected_ids and
+                                        selected_ids.psu_id==item.id }}>
+                                        {{ item.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Casing</label>
+                                <select name="casing" class="form-select" required>
+                                    <option value="" disabled {{ 'selected' if not selected_ids }}>Pilih Casing
+                                        Favorit</option>
+                                    {% for item in casing_list %}
+                                    <option value="{{ item.id }}" {{ 'selected' if selected_ids and
+                                        selected_ids.casing_id==item.id }}>
+                                        {{ item.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">CPU Cooler</label>
+                                <select name="cooler" class="form-select" required>
+                                    <option value="" disabled {{ 'selected' if not selected_ids }}>Tentukan Pendingin
+                                        Sistem</option>
+                                    {% for item in cooler_list %}
+                                    <option value="{{ item.id }}" {{ 'selected' if selected_ids and
+                                        selected_ids.cooler_id==item.id }}>
+                                        {{ item.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-4 d-flex justify-content-center gap-3">
+                            <button type="submit" class="btn btn-analyze px-5 shadow-sm">
+                                ANALISIS RAKITAN SEKARANG
+                            </button>
+                            <a href="/" class="btn btn-danger px-5 fw-bold shadow-sm d-flex align-items-center">
+                                RESET
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                {% if result %}
+                <div class="card shadow p-4 result-card h-100">
+                    <h4 class="text-primary mb-3">Hasil Analisis</h4>
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Estimasi Total Harga</small>
+                        <span class="h3 fw-bold text-success">Rp {{ "{:,.0f}".format(result.total_price) }}</span>
+                    </div>
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Klasifikasi Sistem</small>
+                        <span class="badge bg-dark fs-6">{{ result.kategori }}</span>
+                    </div>
+                    <div class="mb-4">
+                        <small class="text-muted d-block">Status Kompatibilitas</small>
+                        {% if result.is_compatible %}
+                        <span class="badge bg-success py-2 px-3">✅ Kompatibel</span>
+                        {% else %}
+                        <span class="badge bg-danger py-2 px-3">❌ Konflik Ditemukan</span>
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <h6 class="fw-bold mb-3">Log Inference Engine:</h6>
+                    <div class="small">
+                        {% for log in result.analysis %}
+                        <p class="mb-2 border-bottom pb-1">{{ log }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="card shadow p-4 text-center d-flex align-items-center justify-content-center h-100">
+                    <p class="text-muted">Pilih komponen di samping untuk memulai analisis Forward Chaining.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-4 text-muted border-top bg-white">
+        <small>&copy; 2026 BuildWise - Sistem Pakar Rakit PC</small>
+    </footer>
+
+</body>
+
+</html>
